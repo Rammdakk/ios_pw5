@@ -32,7 +32,7 @@
 		A829664428EEE19300BDB2A9 /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A829664328EEE19300BDB2A9 /* NotesViewController.swift */; };
 		A8A1FE1C2901451C002B8A22 /* NewsFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A1FE1B2901451C002B8A22 /* NewsFeedViewController.swift */; };
 		A8A1FE1E29014933002B8A22 /* NewsFeedPresentationLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A1FE1D29014933002B8A22 /* NewsFeedPresentationLogic.swift */; };
-		A8A1FE20290149C9002B8A22 /* NewsFeedBuisnessLogicAndInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A1FE1F290149C9002B8A22 /* NewsFeedBuisnessLogicAndInteractor.swift */; };
+		A8A1FE20290149C9002B8A22 /* NewsFeedBusinessLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A1FE1F290149C9002B8A22 /* NewsFeedBusinessLogic.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,7 +82,7 @@
 		A829664328EEE19300BDB2A9 /* NotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
 		A8A1FE1B2901451C002B8A22 /* NewsFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedViewController.swift; sourceTree = "<group>"; };
 		A8A1FE1D29014933002B8A22 /* NewsFeedPresentationLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedPresentationLogic.swift; sourceTree = "<group>"; };
-		A8A1FE1F290149C9002B8A22 /* NewsFeedBuisnessLogicAndInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedBuisnessLogicAndInteractor.swift; sourceTree = "<group>"; };
+		A8A1FE1F290149C9002B8A22 /* NewsFeedBusinessLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedBusinessLogic.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,7 +183,7 @@
 			children = (
 				A8A1FE1B2901451C002B8A22 /* NewsFeedViewController.swift */,
 				A8A1FE1D29014933002B8A22 /* NewsFeedPresentationLogic.swift */,
-				A8A1FE1F290149C9002B8A22 /* NewsFeedBuisnessLogicAndInteractor.swift */,
+				A8A1FE1F290149C9002B8A22 /* NewsFeedBusinessLogic.swift */,
 				2E1265488DBA8D545CA1446D /* NewsFeedCell.swift */,
 				2E126EBA4B64DB64611AE9B9 /* NewsViewModel.swift */,
 				2E126FACEC861BC0B4636D76 /* NewsView */,
@@ -328,7 +328,7 @@
 				A829663E28EEDE2400BDB2A9 /* UIViewPin.swift in Sources */,
 				A829661028EEDD0200BDB2A9 /* WelcomeViewController.swift in Sources */,
 				A829664228EEDE6400BDB2A9 /* ColorPaletteView.swift in Sources */,
-				A8A1FE20290149C9002B8A22 /* NewsFeedBuisnessLogicAndInteractor.swift in Sources */,
+				A8A1FE20290149C9002B8A22 /* NewsFeedBusinessLogic.swift in Sources */,
 				A829663C28EEDE1000BDB2A9 /* Shadows.swift in Sources */,
 				A829664428EEE19300BDB2A9 /* NotesViewController.swift in Sources */,
 				A829660C28EEDD0200BDB2A9 /* AppDelegate.swift in Sources */,

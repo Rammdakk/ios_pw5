@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol NewsFeedDispayLogic: AnyObject {
+protocol NewsFeedDisplayLogic: AnyObject {
     typealias Model = NewsFeedModel
     func displayData(_ viewModel: [NewsViewModel])
 }
@@ -17,7 +17,7 @@ class NewsFeedViewController: UIViewController {
     // MARK: - External vars
 
     // MARK: - Internal vars
-    private var interactor: NewsFeedBuisnessLogic
+    private var interactor: NewsFeedBusinessLogic
     private var tableView = UITableView(frame: .zero, style: .plain)
     private let refreshControl = UIRefreshControl()
     private var isLoading = false
@@ -25,7 +25,7 @@ class NewsFeedViewController: UIViewController {
 
     // MARK: - Lifecycle
 
-    init(interactor: NewsFeedBuisnessLogic) {
+    init(interactor: NewsFeedBusinessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
     }
@@ -38,6 +38,7 @@ class NewsFeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        isLoading = true
         interactor.fetchNews(Model.GetNews.Request())
     }
 
@@ -46,8 +47,28 @@ class NewsFeedViewController: UIViewController {
 
     private func setupUI() {
         view.backgroundColor = .systemBackground
+        setupNavbar()
         configureTableView()
     }
+
+    private func setupNavbar() {
+        navigationItem.title = "News List"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+                image: UIImage(systemName: "chevron.left"),
+                style: .plain,
+                target: self,
+                action: #selector(goBack)
+        )
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+                image: UIImage(systemName: "gobackward"),
+                style: .plain,
+                target: self,
+                action: #selector(updateData)
+        )
+        navigationItem.rightBarButtonItem?.tintColor = .label
+        navigationItem.leftBarButtonItem?.tintColor = .label
+    }
+
 
     private func configureTableView() {
         setTableViewUpdates()
@@ -56,7 +77,7 @@ class NewsFeedViewController: UIViewController {
         setTableViewCell()
     }
 
-    private func setTableViewUpdates(){
+    private func setTableViewUpdates() {
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(updateData), for: .valueChanged)
         tableView.addSubview(refreshControl) // not required when using UITableViewController
@@ -82,16 +103,20 @@ class NewsFeedViewController: UIViewController {
         tableView.register(NewsCell.self, forCellReuseIdentifier: NewsCell.reuseIdentifier)
     }
 
-    @objc
-    private func updateData(){
-        refreshControl.endRefreshing()
-        interactor.fetchNews(Model.GetNews.Request())
-    }
-
     private func reloadData() {
+        isLoading = false
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadData()
         }
+    }
+
+    // MARK: - Button action
+
+    @objc
+    private func updateData() {
+        refreshControl.endRefreshing()
+        isLoading = true
+        interactor.fetchNews(Model.GetNews.Request())
     }
 
     @objc
@@ -99,6 +124,8 @@ class NewsFeedViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
 }
+
+// MARK: - UITableViewDataSource
 
 extension NewsFeedViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -123,6 +150,8 @@ extension NewsFeedViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - UITableViewDelegate
+
 extension NewsFeedViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !isLoading {
@@ -135,7 +164,7 @@ extension NewsFeedViewController: UITableViewDelegate {
 
 // MARK: - Display Logic
 
-extension NewsFeedViewController: NewsFeedDispayLogic {
+extension NewsFeedViewController: NewsFeedDisplayLogic {
     func displayData(_ viewModel: [NewsViewModel]) {
         newsViewModels = viewModel
         reloadData()

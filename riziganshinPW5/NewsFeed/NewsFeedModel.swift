@@ -10,10 +10,6 @@ enum NewsFeedModel {
         struct Response {
             var articles: NewsList
         }
-
-        struct ViewModel {
-            var news: NewsList
-        }
     }
 
     // MARK: - News

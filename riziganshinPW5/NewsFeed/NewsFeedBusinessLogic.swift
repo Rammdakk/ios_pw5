@@ -1,5 +1,5 @@
 //
-//  NewsFeedBuisnessLogicAndInteractor.swift
+//  NewsFeedBusinessLogicAndInteractor.swift
 //  riziganshinPW5
 //
 //  Created by Рамиль Зиганшин on 20.10.2022.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol NewsFeedBuisnessLogic {
+protocol NewsFeedBusinessLogic {
     typealias Model = NewsFeedModel
     func fetchNews(_ request: Model.GetNews.Request)
 }
@@ -29,7 +29,7 @@ class NewsFeedInteractor {
 
 // MARK: - Business logic
 
-extension NewsFeedInteractor: NewsFeedBuisnessLogic {
+extension NewsFeedInteractor: NewsFeedBusinessLogic {
     func fetchNews(_ request: Model.GetNews.Request) {
         worker.getNews(request) { [weak self] result in
             self?.presenter.presentData(Model.GetNews.Response(articles: result))

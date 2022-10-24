@@ -14,7 +14,7 @@ protocol NewsFeedPresentationLogic {
 
 class NewsFeedPresenter {
     // MARK: - External vars
-    weak var viewController: NewsFeedDispayLogic?
+    weak var viewController: NewsFeedDisplayLogic?
 }
 
 // MARK: - PresentationLogic

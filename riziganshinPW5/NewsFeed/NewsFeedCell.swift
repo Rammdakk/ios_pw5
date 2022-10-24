@@ -10,7 +10,7 @@ final class NewsCell: UITableViewCell {
     private let newsTitleLabel = UILabel()
     private let newsDescriptionLabel = UILabel()
 
-// MARK: - Init
+    // MARK: - Init
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -22,6 +22,8 @@ final class NewsCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: -UI
 
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -35,7 +37,6 @@ final class NewsCell: UITableViewCell {
 
 
     private func setupImageView() {
-//        newsImageView.image = UIImage(named: "landscape")
         newsImageView.layer.cornerRadius = 8
         newsImageView.layer.cornerCurve = .continuous
         newsImageView.clipsToBounds = true
@@ -81,28 +82,32 @@ final class NewsCell: UITableViewCell {
                 constant: -12).isActive = true
     }
 
-    func configure(with data: NewsViewModel) {
-        newsTitleLabel.text = data.title
-        newsDescriptionLabel.text = data.description
-        if let url = data.imageURL {
-            setImage(from: url, data: data)
+    func configure(with news: NewsViewModel) {
+        newsTitleLabel.text = news.title
+        newsDescriptionLabel.text = news.description
+        if let url = news.imageURL {
+            setImage(from: url, news: news)
         }
     }
 
-    func setImage(from url: String,  data: NewsViewModel) {
-        guard let imageURL = URL(string: url) else {
-            return
-        }
-
-        // just not to cause a deadlock in UI!
-        DispatchQueue.global().async {
-            guard let imageData = try? Data(contentsOf: imageURL) else {
+    func setImage(from url: String, news: NewsViewModel) {
+        if let data = news.imageData {
+            DispatchQueue.main.async {
+                self.newsImageView.image = UIImage(data: data)
+            }
+        } else {
+            guard let imageURL = URL(string: url) else {
                 return
             }
-            data.imageData = imageData
-            let image = UIImage(data: imageData)
-            DispatchQueue.main.async {
-                self.newsImageView.image = image
+            DispatchQueue.global().async {
+                guard let imageData = try? Data(contentsOf: imageURL) else {
+                    return
+                }
+                news.imageData = imageData
+                let image = UIImage(data: imageData)
+                DispatchQueue.main.async {
+                    self.newsImageView.image = image
+                }
             }
         }
 
