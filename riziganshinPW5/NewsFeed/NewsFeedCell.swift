@@ -81,10 +81,12 @@ final class NewsCell: UITableViewCell {
                 constant: -12).isActive = true
     }
 
-    func configure(with data: NewsFeedModel.Article?) {
-        newsTitleLabel.text = data?.title
-        newsDescriptionLabel.text = data?.description
-        newsImageView.image = UIImage(named: data?.imageLink ?? "no image")
+    func configure(with data: NewsViewModel) {
+        newsTitleLabel.text = data.title
+        newsDescriptionLabel.text = data.description
+        if let imageData = data.imageData {
+            newsImageView.image = UIImage(data: imageData)
+        }
     }
 
     override func prepareForReuse() {

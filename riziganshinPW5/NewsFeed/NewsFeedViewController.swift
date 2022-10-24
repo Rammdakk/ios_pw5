@@ -9,7 +9,7 @@ import UIKit
 
 protocol NewsFeedDispayLogic: AnyObject {
     typealias Model = NewsFeedModel
-    func displayData(_ viewModel: Model.GetNews.ViewModel)
+    func displayData(_ viewModel: [NewsViewModel])
 }
 
 class NewsFeedViewController: UIViewController {
@@ -20,7 +20,7 @@ class NewsFeedViewController: UIViewController {
     private var interactor: NewsFeedBuisnessLogic
     private var tableView = UITableView(frame: .zero, style: .plain)
     private var isLoading = false
-    private var newsViewModels: Model.NewsList = Model.NewsList(articles: [])
+    private var newsViewModels = [NewsViewModel]()
 
     // MARK: - Lifecycle
 
@@ -85,14 +85,14 @@ extension NewsFeedViewController: UITableViewDataSource {
         if isLoading {
             return 0
         } else {
-            return newsViewModels.articles?.count ?? 0
+            return newsViewModels.count
         }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if isLoading {
         } else {
-            let viewModel = newsViewModels.articles?[indexPath.row]
+            let viewModel = newsViewModels[indexPath.row]
             if let newsCell = tableView.dequeueReusableCell(withIdentifier:
             NewsCell.reuseIdentifier, for: indexPath) as? NewsCell {
                 newsCell.configure(with: viewModel)
@@ -107,15 +107,17 @@ extension NewsFeedViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !isLoading {
             let newsVC = NewsViewController()
+            newsVC.setData(vm: newsViewModels[indexPath.row])
             navigationController?.pushViewController(newsVC, animated: true)
         }
     }
 }
 
 // MARK: - Display Logic
+
 extension NewsFeedViewController: NewsFeedDispayLogic {
-    func displayData(_ viewModel: Model.GetNews.ViewModel) {
-        newsViewModels = viewModel.news
+    func displayData(_ viewModel: [NewsViewModel]) {
+        newsViewModels = viewModel
         reloadData()
     }
 

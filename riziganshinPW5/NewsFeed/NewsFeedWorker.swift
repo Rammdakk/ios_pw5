@@ -8,6 +8,7 @@ import UIKit
 protocol NewsFeedWorkerLogic {
     typealias Model = NewsFeedModel
     func getNews(_ request: Model.GetNews.Request, completion: @escaping (Model.NewsList) -> ())
+    func loadImage(from urlString: String, completion: @escaping (_ data: Data?) -> ())
 }
 
 class NewsFeedWorker: NewsFeedWorkerLogic {
@@ -29,6 +30,22 @@ class NewsFeedWorker: NewsFeedWorkerLogic {
         }
 
         task.resume()
+    }
+
+    func loadImage(from urlString: String, completion: @escaping (_ data: Data?) -> ()) {
+        let session = URLSession.shared
+        guard let url = URL(string: urlString) else {
+            return
+        }
+        let dataTask = session.dataTask(with: url) { (data, response, error) in
+            if let data = data {
+                completion(data)
+            } else {
+                print("Could not load image")
+            }
+        }
+
+        dataTask.resume()
     }
 
 }

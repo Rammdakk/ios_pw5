@@ -18,8 +18,15 @@ class NewsFeedPresenter {
 }
 
 // MARK: - PresentationLogic
-extension NewsFeedPresenter: NewsFeedPresentationLogic{
+
+extension NewsFeedPresenter: NewsFeedPresentationLogic {
     func presentData(_ response: Model.GetNews.Response) {
-        viewController?.displayData(Model.GetNews.ViewModel(news: response.articles))
+
+        let data: [NewsViewModel]? = response.articles.articles?.map { (element: NewsFeedModel.Article) in
+            NewsViewModel(title: element.title ?? "", description: element.description ?? "",
+                    imageURL: element.imageLink)
+        }
+
+        viewController?.displayData(data ?? [NewsViewModel]())
     }
 }

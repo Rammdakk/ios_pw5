@@ -14,6 +14,11 @@ final class NewsViewController: UIViewController {
         setupUI()
     }
 
+    func setData (vm: NewsViewModel){
+        titleLabel.text = vm.title
+        descriptionLabel.text = vm.description
+    }
+
 // MARK: - Private methods
 
     private func setupUI() {
@@ -46,7 +51,7 @@ final class NewsViewController: UIViewController {
     }
 
     private func setTitleLabel() {
-        titleLabel.text = "Hello"
+//        titleLabel.text = "Hello"
         titleLabel.font = .systemFont(ofSize: 16, weight: .medium)
         titleLabel.numberOfLines = 0
         titleLabel.textColor = .label
@@ -57,7 +62,7 @@ final class NewsViewController: UIViewController {
     }
 
     private func setDescriptionLabel() {
-        descriptionLabel.text = "World"
+//        descriptionLabel.text = "World"
         descriptionLabel.font = .systemFont(ofSize: 14, weight: .regular)
         descriptionLabel.numberOfLines = 0
         descriptionLabel.textColor = .secondaryLabel
