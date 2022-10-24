@@ -19,6 +19,7 @@ class NewsFeedViewController: UIViewController {
     // MARK: - Internal vars
     private var interactor: NewsFeedBuisnessLogic
     private var tableView = UITableView(frame: .zero, style: .plain)
+    private let refreshControl = UIRefreshControl()
     private var isLoading = false
     private var newsViewModels = [NewsViewModel]()
 
@@ -49,9 +50,16 @@ class NewsFeedViewController: UIViewController {
     }
 
     private func configureTableView() {
+        setTableViewUpdates()
         setTableViewUI()
         setTableViewDelegate()
         setTableViewCell()
+    }
+
+    private func setTableViewUpdates(){
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(updateData), for: .valueChanged)
+        tableView.addSubview(refreshControl) // not required when using UITableViewController
     }
 
     private func setTableViewDelegate() {
@@ -75,8 +83,20 @@ class NewsFeedViewController: UIViewController {
     }
 
     @objc
+    private func updateData(){
+        refreshControl.endRefreshing()
+        interactor.fetchNews(Model.GetNews.Request())
+    }
+
+    private func reloadData() {
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
+        }
+    }
+
+    @objc
     private func goBack() {
-        self.navigationController?.popViewController(animated: true)
+        navigationController?.popViewController(animated: true)
     }
 }
 
@@ -119,11 +139,5 @@ extension NewsFeedViewController: NewsFeedDispayLogic {
     func displayData(_ viewModel: [NewsViewModel]) {
         newsViewModels = viewModel
         reloadData()
-    }
-
-    private func reloadData() {
-        DispatchQueue.main.async { [weak self] in
-            self?.tableView.reloadData()
-        }
     }
 }

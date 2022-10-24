@@ -165,7 +165,6 @@ class WelcomeViewController: UIViewController {
     private func notesButtonPressed() {
         let notesViewController = NotesViewController()
         notesViewController.modalPresentationStyle = .pageSheet
-        notesViewController.title = "hhehhe"
         present(notesViewController, animated: true)
         let generator = UIImpactFeedbackGenerator(style: .medium)
         generator.impactOccurred()

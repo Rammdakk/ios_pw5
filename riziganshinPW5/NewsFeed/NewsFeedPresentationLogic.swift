@@ -24,7 +24,7 @@ extension NewsFeedPresenter: NewsFeedPresentationLogic {
 
         let data: [NewsViewModel]? = response.articles.articles?.map { (element: NewsFeedModel.Article) in
             NewsViewModel(title: element.title ?? "", description: element.description ?? "",
-                    imageURL: element.imageLink)
+                    imageURL: element.imageLink ?? "https://img.favpng.com/1/0/19/apartment-renting-london-residential-house-product-png-favpng-HDu76aTH05LPrzJjry2ktzTpc.jpg")
         }
 
         viewController?.displayData(data ?? [NewsViewModel]())

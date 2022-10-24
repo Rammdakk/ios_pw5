@@ -14,9 +14,12 @@ final class NewsViewController: UIViewController {
         setupUI()
     }
 
-    func setData (vm: NewsViewModel){
+    func setData(vm: NewsViewModel) {
         titleLabel.text = vm.title
         descriptionLabel.text = vm.description
+        if let data = vm.imageData {
+            imageView.image = UIImage(data: data)
+        }
     }
 
 // MARK: - Private methods
@@ -41,7 +44,7 @@ final class NewsViewController: UIViewController {
     }
 
     private func setImageView() {
-        imageView.image = UIImage(named: "landscape")
+        //  imageView.image = UIImage(named: "landscape")
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         view.addSubview(imageView)
@@ -51,7 +54,6 @@ final class NewsViewController: UIViewController {
     }
 
     private func setTitleLabel() {
-//        titleLabel.text = "Hello"
         titleLabel.font = .systemFont(ofSize: 16, weight: .medium)
         titleLabel.numberOfLines = 0
         titleLabel.textColor = .label
@@ -62,7 +64,6 @@ final class NewsViewController: UIViewController {
     }
 
     private func setDescriptionLabel() {
-//        descriptionLabel.text = "World"
         descriptionLabel.font = .systemFont(ofSize: 14, weight: .regular)
         descriptionLabel.numberOfLines = 0
         descriptionLabel.textColor = .secondaryLabel
@@ -72,8 +73,9 @@ final class NewsViewController: UIViewController {
     }
 
     // MARK: - Objc functions
+
     @objc
     func goBack() {
-        self.navigationController?.popViewController(animated: true)
+        navigationController?.popViewController(animated: true)
     }
 }
